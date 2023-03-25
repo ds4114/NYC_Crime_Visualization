@@ -8,13 +8,13 @@ language:
     chapter_name: "Chapter "
 
 rmd_files: [
-  'index.Rmd',
-  'proposal.Rmd',
-  'data.Rmd',
-  'results.Rmd',
-  'interactive.Rmd',
-  'conclusion.Rmd'
+  '01_index.Rmd',
+  '02_proposal.Rmd',
+  '03_data.Rmd',
+  '04_results.Rmd',
+  '05_interactive.Rmd',
+  '06_conclusion.Rmd'
   ]
 
 
-before_chapter_script: "_common.R"
+before_chapter_script: "99_common.R"
