@@ -3,5 +3,6 @@
 .RData
 .Ruserdata
 data/NYPD_Complaint_Data_Current__Year_To_Date_.csv
-EDAVtemplate.Rproj
+NYC_Crime.Rproj
 BookdownReference.md
+_bookdown_files
