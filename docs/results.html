@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Results | NYC Crime</title>
+  <meta name="description" content="Chapter 4 Results | NYC Crime" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Results | NYC Crime" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Results | NYC Crime" />
+  
+  
+  
+
+<meta name="author" content="Devan Samant" />
+
+
+<meta name="date" content="2023-03-25" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data.html"/>
+<link rel="next" href="interactive-component.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">NYC Crime</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="proposal.html"><a href="proposal.html"><i class="fa fa-check"></i><b>2</b> Proposal</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="proposal.html"><a href="proposal.html#research-topic"><i class="fa fa-check"></i><b>2.1</b> Research topic</a></li>
+<li class="chapter" data-level="2.2" data-path="proposal.html"><a href="proposal.html#data-availability"><i class="fa fa-check"></i><b>2.2</b> Data availability</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="proposal.html"><a href="proposal.html#content"><i class="fa fa-check"></i><b>2.2.1</b> <em>Content</em></a></li>
+<li class="chapter" data-level="2.2.2" data-path="proposal.html"><a href="proposal.html#who-collects-the-data"><i class="fa fa-check"></i><b>2.2.2</b> <em>Who Collects The Data</em></a></li>
+<li class="chapter" data-level="2.2.3" data-path="proposal.html"><a href="proposal.html#format-and-importation"><i class="fa fa-check"></i><b>2.2.3</b> <em>Format and Importation</em></a></li>
+<li class="chapter" data-level="2.2.4" data-path="proposal.html"><a href="proposal.html#updates"><i class="fa fa-check"></i><b>2.2.4</b> <em>Updates</em></a></li>
+<li class="chapter" data-level="2.2.5" data-path="proposal.html"><a href="proposal.html#expected-challenges"><i class="fa fa-check"></i><b>2.2.5</b> <em>Expected Challenges</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#source"><i class="fa fa-check"></i><b>3.1</b> Source</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#content-1"><i class="fa fa-check"></i><b>3.1.1</b> Content</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#who-collects-the-data-1"><i class="fa fa-check"></i><b>3.1.2</b> Who Collects The Data</a></li>
+<li class="chapter" data-level="3.1.3" data-path="data.html"><a href="data.html#format-and-importation-1"><i class="fa fa-check"></i><b>3.1.3</b> Format and Importation</a></li>
+<li class="chapter" data-level="3.1.4" data-path="data.html"><a href="data.html#data-updates"><i class="fa fa-check"></i><b>3.1.4</b> Data Updates</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#data-transformation-and-cleaning"><i class="fa fa-check"></i><b>3.2</b> Data Transformation and Cleaning</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#data-loading"><i class="fa fa-check"></i><b>3.2.1</b> Data Loading</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data.html"><a href="data.html#bucket-crime-types"><i class="fa fa-check"></i><b>3.2.2</b> Bucket Crime Types</a></li>
+<li class="chapter" data-level="3.2.3" data-path="data.html"><a href="data.html#datetime-transformation"><i class="fa fa-check"></i><b>3.2.3</b> Date/Time Transformation</a></li>
+<li class="chapter" data-level="3.2.4" data-path="data.html"><a href="data.html#geo-location-fields"><i class="fa fa-check"></i><b>3.2.4</b> Geo-Location Fields</a></li>
+<li class="chapter" data-level="3.2.5" data-path="data.html"><a href="data.html#other-derivations"><i class="fa fa-check"></i><b>3.2.5</b> Other Derivations</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#filter-table-for-relevance"><i class="fa fa-check"></i><b>3.3</b> Filter Table for Relevance</a></li>
+<li class="chapter" data-level="3.4" data-path="data.html"><a href="data.html#select-and-rename-columns"><i class="fa fa-check"></i><b>3.4</b> Select and Rename Columns</a></li>
+<li class="chapter" data-level="3.5" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.5</b> Missing Value Analysis</a></li>
+<li class="chapter" data-level="3.6" data-path="data.html"><a href="data.html#interactive-component-datasets"><i class="fa fa-check"></i><b>3.6</b> Interactive Component Datasets</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#crime-category-and-demographic-analysis"><i class="fa fa-check"></i><b>4.1</b> Crime Category and Demographic Analysis</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="results.html"><a href="results.html#crime-by-borough"><i class="fa fa-check"></i><b>4.1.1</b> Crime by Borough</a></li>
+<li class="chapter" data-level="4.1.2" data-path="results.html"><a href="results.html#race"><i class="fa fa-check"></i><b>4.1.2</b> Race</a></li>
+<li class="chapter" data-level="4.1.3" data-path="results.html"><a href="results.html#gender"><i class="fa fa-check"></i><b>4.1.3</b> Gender</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#time-series-analysis"><i class="fa fa-check"></i><b>4.2</b> Time Series Analysis</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="results.html"><a href="results.html#day-of-week"><i class="fa fa-check"></i><b>4.2.1</b> Day of Week</a></li>
+<li class="chapter" data-level="4.2.2" data-path="results.html"><a href="results.html#time-of-day"><i class="fa fa-check"></i><b>4.2.2</b> Time of Day</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#location-analysis"><i class="fa fa-check"></i><b>4.3</b> Location Analysis</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="results.html"><a href="results.html#spatial-distribution-around-columbia"><i class="fa fa-check"></i><b>4.3.1</b> Spatial Distribution Around Columbia</a></li>
+<li class="chapter" data-level="4.3.2" data-path="results.html"><a href="results.html#spatial-distribution-around-columbia-by-crime-category"><i class="fa fa-check"></i><b>4.3.2</b> Spatial Distribution Around Columbia by Crime Category</a></li>
+<li class="chapter" data-level="4.3.3" data-path="results.html"><a href="results.html#increasing-radius-from-columbia"><i class="fa fa-check"></i><b>4.3.3</b> Increasing Radius from Columbia</a></li>
+<li class="chapter" data-level="4.3.4" data-path="results.html"><a href="results.html#cumulative-crime-near-cu"><i class="fa fa-check"></i><b>4.3.4</b> Cumulative Crime Near CU</a></li>
+<li class="chapter" data-level="4.3.5" data-path="results.html"><a href="results.html#crime-density"><i class="fa fa-check"></i><b>4.3.5</b> Crime Density</a></li>
+<li class="chapter" data-level="4.3.6" data-path="results.html"><a href="results.html#deeper-dive-of-crime-density"><i class="fa fa-check"></i><b>4.3.6</b> Deeper Dive of Crime Density</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive Component</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interactive-component.html"><a href="interactive-component.html#interactive-map-of-crime-around-columbia"><i class="fa fa-check"></i><b>5.1</b> Interactive Map of Crime Around Columbia</a></li>
+<li class="chapter" data-level="5.2" data-path="interactive-component.html"><a href="interactive-component.html#future-work"><i class="fa fa-check"></i><b>5.2</b> Future Work</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="conclusion.html"><a href="conclusion.html#limitations-and-future-work"><i class="fa fa-check"></i><b>6.1</b> Limitations and Future Work</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">NYC Crime</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="results" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Results<a href="results.html#results" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="crime-category-and-demographic-analysis" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Crime Category and Demographic Analysis<a href="results.html#crime-category-and-demographic-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>We start our analysis of crime types by investigating what types of crimes occur in what frequencies. We bucketed the numerous crimes from the raw data into logical categories in the last chaptuer. Note that in the pre-processing stage, we removed a small “Other” category of parking violations and noise complaints.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Here we can see the crime incident that has happened the most frequently is “Petit Larceny”, a form of larceny in which the value of the property taken is generally less than $50. We also observe that theft or burglary related crimes are the most common by far. This category is followed by sex crimes, violent crimes, and fraud/gambling related crimes all of which are relatively close in number. The lowest category by far is drug and alcohol related crimes, perhaps because the policing of these crimes has been relaxed over the last few years.</p>
+<div id="crime-by-borough" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> Crime by Borough<a href="results.html#crime-by-borough" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When one decides to attend Columbia University, one may ask themselves which borough should they live in depending on the relative safety of living in each borough. Therefore, following are the plots of count of total crimes and different types of crimes by the boroughs.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>From these graphs, we note that with respect to overall crime, Brooklyn has the most crime followed by Manhattan. Secondly, it’s interesting to see that while Brooklyn has more crime of type “SEX CRIMES”, “MAJOR VIOLENT CRIMES”, AND “FRAUD/GAMBLING AND MISC” compared to Manhattan while Manhattan has more crime of type “THEFT OR BURGLARY” and “DRUG AND ALCOHOL RELATED” compared to Brooklyn.</p>
+<p>Let us now take a look at other variables in the dataset. After some trial and error, the following yields some insights (looking at only crimes against individuals):
+<img src="finalproj_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>We see here that more crime occurs inside compared to outside (which aligns with the fact most crime is larceny/theft). What is interesting there does not seem to be a difference between age groups and boroughs and premise as the divisions are mostly even. Even accounting for uneven age groups in the raw data, it still seems like 25-44 is the largest category.</p>
+</div>
+<div id="race" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> Race<a href="results.html#race" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We can dig further into demographics by looking into the race and gender of both the suspects and victims. Note - this is simply exploratory analysis of data that has been reported and categorized by the NYPD and care should be taken for any extrapolation that may be made.</p>
+<p>Let us begin by diving into trends between the race of the suspects and victims.
+<img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>While there is a lot of null/unknown data, we would like to explore patterns between the race of the suspect and victim.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>We see from the bar charts that most of the victims are Black and also that most of the suspects are Black. Logically, the intersection of these two fields is also the highest which is made evident in the heatmap. While this graph has its merits, demographically we know that there are much fewer people of say American Indian race than Black. It may also be worth looking at the proportion per suspect race in each horizontal victim race band to account for uneven data classes.</p>
+</div>
+<div id="gender" class="section level3 hasAnchor" number="4.1.3">
+<h3><span class="header-section-number">4.1.3</span> Gender<a href="results.html#gender" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Next, lets do a gender focused analysis.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>We see that most of the victims are female and most of the suspects are male although there is a large unknown category. It is concerning but would fit with the historical paradigm that most of the crime seems to be committed by men towards women.</p>
+</div>
+</div>
+<div id="time-series-analysis" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Time Series Analysis<a href="results.html#time-series-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Per pre-processing, we are focusing on incidents reported in 2022. We can look at the overall trend during the year as of the publish date, after Q3 2022.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>The overall trend is dominated by theft crimes since the volume is largest. It does seem like there is a hump over summer which may align to more human activity and thus more crime. Uniquely, there is a dip for drug crimes in the summer.</p>
+<div id="day-of-week" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Day of Week<a href="results.html#day-of-week" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s now look at some other time related charts.
+<img src="finalproj_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>There are a few interesting trends here. For one, theft appears to be lower on weekends whereas violent crimes are the opposite. We also see that fraud/gambling ramps up over the week and peaks on Fridays. Sex crimes are highest on Wednesdays surprisingly.</p>
+</div>
+<div id="time-of-day" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Time of Day<a href="results.html#time-of-day" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s also look at the time of the day:
+<img src="finalproj_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>The raw data is rounded to the nearest minute but there is likely binning happening with time reported on the nearest hour. There appears to be a peak at 12:00pm (12 of 24) which is likely a data quality issue in that reports may default to that time when not specified exactly. This also happens as 12:00am (0 of 24) though it is harder to see due to how the ridge plot extrapolates at the boundary. That said, this graph shows that crimes seems to peak at night around 6pm. But is this related to individual crimes and in/around parks?</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>From prior charts, we know that the number of crimes is skewed toward those occurring in “Inside”. This does not represent the magnitude but we can see that for individuals, parks are more ‘dangerous’ at night - more so than other locations. However, it is somewhat comforting to know that this starts to drop off quickly after about 7-8pm.</p>
+</div>
+</div>
+<div id="location-analysis" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Location Analysis<a href="results.html#location-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="spatial-distribution-around-columbia" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Spatial Distribution Around Columbia<a href="results.html#spatial-distribution-around-columbia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since a component of our research is to analyze how crime is spread out around Columbia University, a visual analysis of spatial distribution of all crime around Columbia is useful. The following is a map centered around Columbia University (CU) that shows where crime is distributed.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>The above map is useful to see how geographical location of a crime is coded in the dataset - for example, all crimes happening on a particular street (or residences on a particular street) between two avenues is assigned to the lat-long coordinates of the center of that street (See W 111th St to W 124th St for instance).</p>
+<p>Another thing this shows is around which subway station there is more crime. For example, out of the 2 125th st stations, the one on the right has noticeably more crime concentrated around it than the one on the left. Note that the way data is recorded, all crimes that happen inside a subway station are coded to the location of the subway station. So this result could also mean that one station is safer than the other.</p>
+<p>This map could also be used to plan one’s route to and from Columbia depending if safety is a concern. For example, one could see which streets and avenues have less crime concentrated on them and so could indicate which routes are generally safer to travel on. Stay tuned for our interactive component that makes it easier for you to zoom in and out while planning your route!</p>
+</div>
+<div id="spatial-distribution-around-columbia-by-crime-category" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Spatial Distribution Around Columbia by Crime Category<a href="results.html#spatial-distribution-around-columbia-by-crime-category" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Following maps show the spatial distribution of crime around Columbia University by crime categories.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
+<p>The above maps clearly show that the most prevalent kind of crime around Columbia University is “THEFT OR BURGLARY” and “DRUG AND ALCOHOL RELATED” crimes are the least prevalent. Another interesting pattern to note is that for the categories “SEX CRIMES”, “FRAUD/GAMBLING AND MISC”, and “MAJOR VIOLENT CRIMES”, the crime is concentrated most around 125th st.</p>
+</div>
+<div id="increasing-radius-from-columbia" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Increasing Radius from Columbia<a href="results.html#increasing-radius-from-columbia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following histogram was produced to check how the crime frequency increases with increasing radius away from school.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>This graph shows that within each 100m radius (up to 2000m away from Columbia), the crime frequency increases. The explanation is that because the increase in area considered within each 100m bin increases polynomially (with the power of 2), it’s only natural that we see more crimes in buckets farther away from Columbia than those closer to columbia because the area considered within each bucket increases more than linearly. It is still interesting to note however that for some buckets the crime frequency goes down even though the area considered goes up. The next plots further investigate this issue using the concept of density of crime.</p>
+</div>
+<div id="cumulative-crime-near-cu" class="section level3 hasAnchor" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> Cumulative Crime Near CU<a href="results.html#cumulative-crime-near-cu" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The previous plot motivated us to try to confirm whether the crime frequency follows a quadratic relationship with respect to radius from Columbia University. Note that this would imply that crime scales linearly with the area considered.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>Note that the curve roughly follows the shape of the quadratic curve confirming that the crime does increase linearly with area and quadratically with the radius considered. So then, what explains the decline in crime frequency observed in some of the buckets in the previous histogram? (For instance, the bucket that shows the crime frequency to drop between 1100m and 1200m as compared to the bucket that shows the crime frequency within 1000m and 1100m). We further explore this issue in our next plots.</p>
+</div>
+<div id="crime-density" class="section level3 hasAnchor" number="4.3.5">
+<h3><span class="header-section-number">4.3.5</span> Crime Density<a href="results.html#crime-density" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Since in the earlier histogram we saw that within some buckets the crime count was decreasing, we wanted to see how the density of crime changes as move away from Columbia generally and also specifically as we move from a bucket of 100m radius to the next bucket of the incremental 100m radius.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<ul>
+<li><p>Note that the cumulative density plot shows that crime is less dense within 750m of Columbia after which it becomes more dense. Potential explanations are that there could be extra policing around the campus area, or an increase in crime density due to an increase in population density as we move beyond 750m from Columbia.</p></li>
+<li><p>The incremental density plot shows the increase (or decrease) in density as we move from a bucket of 100m to radius to the bucket of next 100m radius around Columbia. Note that this graph also shows what the earlier histogram showed, i.e., for some buckets the density of crime goes down.</p></li>
+</ul>
+</div>
+<div id="deeper-dive-of-crime-density" class="section level3 hasAnchor" number="4.3.6">
+<h3><span class="header-section-number">4.3.6</span> Deeper Dive of Crime Density<a href="results.html#deeper-dive-of-crime-density" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To finally see why we see buckets of incremental 100m radius away from Columbia with decreasing density of crime, we decided to plot these buckets visually on a google map of the area around Columbia overlapped with the spatial density of crime.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+<p>We speculate that we see up and down jumps in incremental crime density due to the following reasons:</p>
+<ol style="list-style-type: decimal">
+<li><p>While we increase the area in a circular fashion as we move away from Columbia, the lat/long coordinates of crime are recorded with the grid structure of Manhattan in mind. Therefore, some incremental radius/area buckets circles end up having way less crime reported if they contain parts of a park in them (since the crimes within parks are reported as happening on the streets outside the parks).</p></li>
+<li><p>Another reason is that many crimes are just reported to the center of the streets (as discussed in the spatial distribution map earlier). What ends up happening is that some incremental radius/area buckets end up including a straight line of all these concentrated crimes which lead to their crime density shooting up- see for example the area between the third last and the second last circle that ends up having majority of the crimes reported on streets W 112th to W 120th.</p></li>
+</ol>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="interactive-component.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ds4114/NYC_Crime_Group32/edit/main/results.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/ds4114/NYC_Crime_Group32/blob/main/results.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
