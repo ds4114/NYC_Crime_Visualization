@@ -159,7 +159,7 @@ D. Kahle and H. Wickham. ggmap: Spatial Visualization with ggplot2. The R Journa
   </script>
   
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=INSERTAPIKEY&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0GcOj8ahJPXgMXEZZ495GP9aHkijZG8U&callback=initMap">
   </script>
   
 ## Future Work
