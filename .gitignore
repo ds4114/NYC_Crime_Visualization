@@ -6,3 +6,4 @@ data/NYPD_Complaint_Data_Current__Year_To_Date_.csv
 NYC_Crime.Rproj
 BookdownReference.md
 _bookdown_files
+.DS_Store
