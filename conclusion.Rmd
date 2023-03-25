@@ -1,0 +1,22 @@
+# Conclusion
+
+*Disclaimer: The following conclusions expand on findings from the earlier chapters but are still limited to the dataset used in this project. Additional data and analysis are required to fully understand trends and safety in NYC.*
+
+We started this project to understand a bit more about crime in NYC and safety (broadly defined) around Columbia. There are limitations with the data and analysis defined more in the section below, but overall this was an interesting exercise and can help inform decisions we make everyday. 
+
+We found that larceny and theft is the most commonly reported crime. This holds true for Manhattan and all boroughs, but violent crime and sex crimes are higher in Brooklyn and the Bronx than in Manhattan. Most crime appears to take place indoors which coincides with the large amount of theft. 
+
+Many reported crimes do not have individual information populated but for the ones that do, it appears that victims are black or female most often. Surprisingly, there does not seem to be a large difference in victim ages across locations with the "<18" years old category being smallest everywhere. 
+
+Overall summer months appear to be more active for crime. Crime categories change with different days of the week where theft appears to be lower on weekends whereas violent crimes are the opposite. The time of day also reasonably affects the amount of crime. It seems most crime occurs at 5:00pm with with crime at parks peaking around 8:00pm and a more even distribution in the subway throughout a day. 
+
+Columbia University, west of Morningside park, appears relatively safe but there are several limitation to conclude this. For one, there is a level of binning happening with reported locations being imprecise. Also, locations are sometimes listed at the nearest NYPD precinct so there is a skew near 123rd St and Fredrick Douglas Blvd. Additionally, the data depends on reported crime to the NYPD and it is possible that CU police use a different system. 
+
+## Limitations and Future Work
+In addition to some of the limits listed above, we would like to mention that care should be taken when using crime statistics to evaluate risk. A simple example relates to parks at nights. There are very few people who may walk through a park at night and thus even if 100% of people get mugged, the total number of reports of crime will be small. It would help to enhance the data to integrate overall movement or human activity statistics to be able to see proportions of crime vs no crime. 
+
+While we are able to filter reports to relevant crimes for this analysis, some crime is not reported at all. For example, drug use can be consider a *mala prohibita* offense meaning no complaint is filed. So this dataset would not be representative of the true rate of drug-related crime without additional info from justice department forms and filings.  
+
+The data in this project only contained 3 quarters of data and integrating historical years may show new and interesting trends. We also only scratched the surface of data cleansing. In terms of analysis, we could enhance the interactive component to be more of a dashboard with additional charts and filters. And we could make the distance analysis more robust by allowing users to select a location rather than hard-coding to Columbia. 
+
+

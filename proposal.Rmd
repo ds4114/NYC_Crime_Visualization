@@ -1,0 +1,102 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+# Proposal
+
+## Research topic
+
+Have you ever gotten out of a class at 9:30pm and wondered if it was safe to walk home? Do you wonder if you should cut through a park or take the subway? Is it possible to quantify "safe"? Does your risk profile change after 10:30pm or if you are a certain gender? 
+
+The motivation for this project spawned from these practical questions we had in relation to navigating NYC on and off campus. Many of our classes get out at night and we live nearby but wonder if there is a walking path home that exhibits the least risk. We want to answer these types of questions using data and visualizations.
+
+The focus of this project is to analyze NYPD crime and complaint data around Columbia during the school year. However, the data (described more in the next section) lends itself to investigate broader questions of equity by demographics and neighborhood across NYC. We also have flexibility in the time range to investigate and may look at longer trends. 
+
+
+## Data availability
+
+NYC Open Data (NYC Office of Technology and Innovation (OTI)) in conjunction with New York City Police Department (NYPD) makes public safety data available for anyone online. In particular they publish Complaint Data which contains felony, misdemeanor, and violation crimes reported to the NYPD from 2006 till present.
+
+Year-to-Date (YTD): https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Current-Year-To-Date-/5uac-w243
+
+Historic: https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i
+
+### *Content*
+"Complaint data" is a mixed set of records because it contains crimes (ex. robbery, rape, assault), parking violations, complaints of harassment, reports of abandoned animals, and more. We will need to investigate, clean, and filter the data to answer our research questions. 
+
+As the links above indicate, there are two sets of data containing distinct records. A year-to-date dataset from 1/1/2022 to 9/30/2022 and a historic dataset containing records from 1/1/2006 to 12/31/2021. We plan to start with the year-to-date data and potentially incorporate historic records as needed. 
+
+The dataset contains mostly categorical variables and dates with each row indicating a crime/violation. As of the last update on October 19, 2022, the YTD Dataset contains 397K rows and 36 columns. A data dictionary is provided by NYC Open Data at the link above.  
+
+Column names and description:
+
+S.No Column Name (Data Type): Description
+
+1) CMPLNT_NUM (text): Randomly generated persistent ID for each complaint
+2) ADDR_PCT_CD (text): The precinct in which the incident occurred
+3) BORO_NM	(text): The name of the borough in which the incident occurred 
+4) CMPLNT_FR_DT	(DateTime): Exact date of occurrence for the reported event (or starting date of occurrence, if CMPLNT_TO_DT exists)
+5) CMPLNT_FR_TM	(text): Exact time of occurrence for the reported event (or starting time of occurrence, if CMPLNT_TO_TM exists)
+6) CMPLNT_TO_DT	(DateTime): Ending date of occurrence for the reported event, if exact time of occurrence is unknown
+7) CMPLNT_TO_TM	(text): Ending time of occurrence for the reported event, if exact time of occurrence is unknown
+8) CRM_ATPT_CPTD_CD	(text): Indicator of whether crime was successfully completed or attempted, but failed or was interrupted prematurely 
+9) HADEVELOPT	(text): Name of NYCHA housing development of occurrence, if applicable 
+10) HOUSING_PSA	(Number): Development Level CodeNumber
+11) JURISDICTION_CODE	(Number): Jurisdiction responsible for incident. Either internal, like Police(0), Transit(1), and Housing(2); or external(3), like Correction, Port Authority, etc.
+12) JURIS_DESC (text): Description of the jurisdiction code
+13) KY_CD	(Number): Three digit offense classification code
+14) LAW_CAT_CD (text): Level of offense: felony, misdemeanor, violation
+15) LOC_OF_OCCUR_DESC	(text): Specific location of occurrence in or around the premises; inside, opposite of, front of, rear of
+16) OFNS_DESC	(text): Description of offense corresponding with key code
+17) PARKS_NM	(text): Name of NYC park, playground or greenspace of occurrence, if applicable (state parks are not included)
+18) PATROL_BORO	(text): The name of the patrol borough in which the incident occurred
+19) PD_CD	(Number): Three digit internal classification code (more granular than Key Code)
+20) PD_DESC (text): Description of internal classification corresponding with PD code (more granular than Offense Description)
+21) PREM_TYP_DESC	(text): Specific description of premises; grocery store, residence, street, etc.
+22) RPT_DT (DateTime): Date event was reported to police
+23) STATION_NAME	(text): Transit station name
+24) SUSP_AGE_GROUP	(text): Suspect’s Age Group
+25) SUSP_RACE	(text): Suspect’s Race Description
+26) SUSP_SEX	(text): Suspect’s Sex Description
+27) TRANSIT_DISTRICT (Number): Transit district in which the offense occurred
+28) VIC_AGE_GROUP (text):	Victim’s Age Group
+29) VIC_RACE (text): Victim’s Race Description
+30) VIC_SEX	(text): Victim’s Sex Description
+31) X_COORD_CD (Number): X-coordinate for New York State Plane Coordinate System, Long Island Zone, NAD 83, units feet (FIPS 3104)
+32) Y_COORD_CD (Number): Y-coordinate for New York State Plane Coordinate System, Long Island Zone, NAD 83, units feet (FIPS 3104)
+33) Latitude (Number): Midblock Latitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326)
+34) Longitude	(Number): Midblock Longitude coordinate for Global Coordinate System, WGS 1984, decimal degrees (EPSG 4326)
+35) LatLon (Location)
+36) New Georeferenced Column (Point)
+
+
+### *Who Collects The Data*
+The data was collected and published by the NY Police Department (NYPD).
+
+
+### *Format and Importation*
+OTI provides the data in 4 formats: 1) online table, 2) visualization, 3) CSV, and 4) API. The first two have limited functionality and customization so we will not use those versions. The API requires an account and authentication tokens. Given that the CSV for YTD data is not too large (140MB), it seems the easiest to work with. CSV is a format we are most familiar with and one that R handles well. 
+
+Is there a difference between CSV and API? Yes. Not in number of observations but in the columns. With the CSV, we get a total of 36 columns (listed above) but with the API we get a total of 41 columns. 
+
+Following are the columns that are present in the CSV data but not in the API data: 
+
+1. New Georeferenced Column. 
+
+Following are the columns that are present in the API data but not in the CSV data:
+
+1. :@computed_region_92fq_4b7q  
+2. :@computed_region_yeji_bk3q  
+3. :@computed_region_efsh_h5xi
+4. geocoded_column
+5. :@computed_region_sbqj_enih
+6. :@computed_region_f5dn_yrer
+
+### *Updates*
+This dataset was first made public on 11/1/2018. It is updated quarterly. It appears that the metadata is updated more frequently but it is not clear what changes are incorporated as there could be several updates made in Oct 2022 but the data will only contain records up to the prior month end of Sept 2022. 
+
+### *Expected Challenges*
+The data does not have many continuous variables. We will have to derive one based on counts and may need to supplement with other data to obtain others (ex. average cost/insurance per type of crime). 
+There are longitude and latitude fields which we would like to utilize but have not identified an R package to process and visualize.
+

@@ -1,0 +1,19 @@
+--- 
+title: "NYC Crime"
+author: "Group 32: Abhiram Gaddam, Faizan Dogar, Devan Samant"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+
+# Introduction
+
+Have you ever gotten out of a class at 9:30pm and wondered if it was safe to walk home? Do you wonder if you should cut through a park or take the subway? Is it possible to quantify "safe"? Does your risk profile change after 10:30pm or if you are a certain gender? 
+
+The motivation for this project spawned from these practical questions we had in relation to navigating NYC on and off campus. Many of our classes get out at night and we live nearby but wonder if there is a walking path home that exhibits the least risk. We want to answer these types of questions using data and visualizations.
+
+The focus of this project is to analyze NYPD crime and complaint data around Columbia during the school year. However, the data (described more in the next section) lends itself to investigate broader questions of equity by demographics and neighborhood across NYC. 
+
+
+
+
+    

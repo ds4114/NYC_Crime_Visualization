@@ -1,0 +1,172 @@
+# Interactive Component
+
+The following map contains a list of crimes near Columbia (within 1km). Each dot indicates a reported crime (data filtered per the steps described in the "Data" chapter).
+
+The motivation for this component is to allow a user to select features through a series of buttons and view what crime statistics look like geographically. Try playing with the filters to adjust the amount of reported crime. As shown the previous chapter, more crime occurs at night and when the victim is female.   
+
+This chapter uses a special package, ggmap, cited below:
+
+D. Kahle and H. Wickham. ggmap: Spatial Visualization with ggplot2. The R Journal, 5(1), 144-161. URL http://journal.r-project.org/archive/2013-1/kahle-wickham.pdf
+
+## Interactive Map of Crime Around Columbia
+  <title>My Google Map</title>
+  <style>
+    #map{
+      height:400px;
+      width:100%;
+    }
+  </style>
+  
+  <p>Instructions: Please select an option below to filter points on the map and refresh the page to reset. Please be patient while the data renders.</p>
+  
+  Victim Gender: <br>
+  <input type="radio" name="gender" value="All" checked="true">All
+  <input type="radio" name="gender" value="M">Male
+  <input type="radio" name="gender" value="F">Female
+    
+  Time of Day: <br>
+  <input type="radio" name="timeday" value="All" checked="true">All <br>
+  <input type="radio" name="timeday" value="Day">Day (6am-6pm) <br>
+  <input type="radio" name="timeday" value="Night">Night (6pm-6am)  
+  
+  <br>
+  <b><p id=filter_string>All Data Points (within 1km):</p></b>
+  
+  <div id="map"></div>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+  
+  
+  <script type="text/javascript">
+    
+    var gender = "All";
+    var timeday = "All";
+    var rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short.csv";
+    var filter_string = "All Data Points (within 1km):"
+    
+    d3.selectAll("input")
+      .on("click", function(event) { 
+        console.log("clicked radio")
+        //var gender = event.currentTarget.value;
+        var gender  = d3.select('input[name="gender"]:checked').node().value;
+        var timeday = d3.select('input[name="timeday"]:checked').node().value;
+        console.log(gender);
+        
+        if (gender == "All" & timeday=="All") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short.csv";
+              d3.selectAll("p#filter_string").text("All Data Points (within 1km):")
+              initMap()
+          } 
+          if (gender == "M" & timeday=="All") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short_M.csv";
+              d3.selectAll("p#filter_string").text("Within 1km, Male Victim:")
+              initMap()
+          } 
+          if (gender == "F" & timeday=="All") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short_F.csv";
+              d3.selectAll("p#filter_string").text("Within 1km, Female Victim:")
+              initMap()
+          }
+          if (gender == "All" & timeday=="Day") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short_Day.csv";
+              d3.selectAll("p#filter_string").text("Within 1km, Day Time:")
+              initMap()
+          }
+          if (gender == "All" & timeday=="Night") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short_Night.csv";
+              d3.selectAll("p#filter_string").text("Within 1km, Night Time:")
+              initMap()
+          }
+          if (gender == "M" & timeday=="Day") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short_MDay.csv";
+              d3.selectAll("p#filter_string").text("Within 1km, Male Victim, Day Time:")
+              initMap()
+          }
+          if (gender == "F" & timeday=="Day") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short_FDay.csv";
+              d3.selectAll("p#filter_string").text("Within 1km, Female Victim, Day Time:")
+              initMap()
+          }
+          if (gender == "M" & timeday=="Night") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short_MNight.csv";
+              d3.selectAll("p#filter_string").text("Within 1km, Male Victim, Night Time:")
+              initMap()
+          }
+         if (gender == "F" & timeday=="Night") {
+              rep_string = "https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short_FNight.csv";
+              d3.selectAll("p#filter_string").text("Within 1km, Female Victim, Night Time:")
+              initMap()
+          }
+
+      })
+      
+    console.log("test16")
+    console.log(rep_string)
+    
+    
+    async function getData(){
+    //const rep= await fetch("./NYC_Crime_Group32/data/columbia_short.csv")
+    //const rep= await fetch("./data/columbia_short.csv")
+    //const rep = await fetch("https://raw.githubusercontent.com/ds4114/NYC_Crime_Group32/main/data/columbia_short.csv")
+    const rep = await fetch(rep_string)
+    const data= await rep.text();
+    console.log(rep_string)
+    let fin=[]
+    const table=data.split('\n').slice(1)
+    table.forEach(row=>{
+        const colums=row.split(',');
+        tab=[parseFloat(colums[0]), parseFloat(colums[1])]
+        //console.log(tab)
+        //locations.push(tab)
+        fin.push(tab)  
+        });
+        //console.log(fin)
+        return fin
+    }
+    
+    function initMap() {
+    
+    points =
+    getData().then(values => {
+    // Print the values of the resolved promise
+    values.forEach(value => {
+    
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(value[0], value[1]),
+        map: map,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'red',
+          fillOpacity: 0.2,
+          strokeColor: '#00A',
+          strokeOpacity: 0.2,
+          strokeWeight: 1,
+          scale: 3.25
+        }
+      });
+    
+    
+      } );
+     });
+  
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14.5,
+      center: new google.maps.LatLng(40.807384,-73.963036)
+    });
+    
+    }
+
+  </script>
+  
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=INSERTAPIKEY&callback=initMap">
+  </script>
+  
+## Future Work
+There are several changes we have considered:
+1.The graph is usable but the alpha-blending on the points does not entirely capture the magnitude of the crime. We were thinking to add an additional component to show total crime counts.
+2. There are only limited filters enabled right now but adding more could help a user hone down to a target subset that is customized for them. 
+3. We had hoped to allow users to select both a "from" and "to" destination but found that was hard to execute and would require some design thinking on how to implement without a user having to type in specific latitude and longitude. 
+4. We also would like to speed up the efficiency of the program by optimizing how the map draws data points around a location - perhaps down-sampling the data could help and we could expand beyond 1km. 
+5. We also would like to clean up some of the warnings produced by the code and ggmap as well as catch potential errors that could be thrown. 
+

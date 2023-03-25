@@ -1,0 +1,437 @@
+# Results
+
+```{r setup_results, include=FALSE}
+#knitr::opts_chunk$set(echo= TRUE, warning = FALSE, message = FALSE)
+```
+
+
+## Crime Category and Demographic Analysis
+
+We start our analysis of crime types by investigating what types of crimes occur in what frequencies. We bucketed the numerous crimes from the raw data into logical categories in the last chaptuer. Note that in the pre-processing stage, we removed a small "Other" category of parking violations and noise complaints. 
+
+```{r}
+df_key_fields %>%
+  group_by(OFNS_DESC,FCT_CRIME_CAT) %>%
+  summarize(freq = n()) %>%
+  arrange(desc(freq)) %>%
+  #filter(freq>2700) %>%
+  head(15) %>%
+  ggplot(aes(x = freq, y = fct_reorder(OFNS_DESC, freq), color = FCT_CRIME_CAT)) +
+  geom_segment(aes(yend = OFNS_DESC), xend = 0, colour = "grey50") +
+  geom_point(size = 3, aes(color = FCT_CRIME_CAT)) +
+  ggtitle("Top 15 Most Commonly Reported Types of Crime") +
+  xlab("Count") +
+  ylab("Type of Crime") +
+  labs(color = "Aggregate Crime Category") +
+  scale_x_continuous(label=comma)
+```
+
+Here we can see the crime incident that has happened the most frequently is “Petit Larceny”, a form of larceny in which the value of the property taken is generally less than $50. We also observe that theft or burglary related crimes are the most common by far. This category is followed by sex crimes, violent crimes, and fraud/gambling related crimes all of which are relatively close in number. The lowest  category by far is drug and alcohol related crimes, perhaps because the policing of these crimes has been relaxed over the last few years.
+
+
+### Crime by Borough
+When one decides to attend Columbia University, one may ask themselves which borough should they live in depending on the relative safety of living in each borough. Therefore, following are the plots of count of total crimes and different types of crimes by the boroughs.
+
+```{r}
+ggplot(df_filter) +  geom_bar(aes(x=Borough_short)) + facet_wrap(~CRIME_CAT) + 
+labs(
+   x ="Borough"
+  ,y ="Count"
+  ,title = "Crime by Borough and Type"
+  ,subtitle = "BK=Brooklyn, BX=Bronx, MH=Manhattan, QN=Queens, SI=Staten Island, NA =Missing Data")+
+scale_y_continuous(label=comma)
+```
+
+
+From these graphs, we note that with respect to overall crime, Brooklyn has the most crime followed by Manhattan. Secondly, it's interesting to see that while Brooklyn has more crime of type "SEX CRIMES", "MAJOR VIOLENT CRIMES", AND "FRAUD/GAMBLING AND MISC" compared to Manhattan while Manhattan has more crime of type "THEFT OR BURGLARY" and "DRUG AND ALCOHOL RELATED" compared to Brooklyn. 
+
+
+Let us now take a look at other variables in the dataset. After some trial and error, the following yields some insights (looking at only crimes against individuals):
+```{r}
+counts3 <- df_filter %>%
+  filter(VIC_Individual_Flag == "Y") %>%
+  group_by(VIC_RACE_short, SUSP_RACE_short, CRIME_CAT, BORO_NM, Premise_Derived, VIC_Individual_Flag, fct_rev(VIC_AGE_GROUP), Inside_Outside) %>%
+  rename(VIC_AGE = `fct_rev(VIC_AGE_GROUP)`) %>%
+  summarize(Freq = n())
+
+vcd::mosaic(VIC_AGE ~ BORO_NM + Inside_Outside, counts3, direction = c("v","v", "h"))
+```
+
+We see here that more crime occurs inside compared to outside (which aligns with the fact most crime is larceny/theft). What is interesting there does not seem to be a difference between age groups and boroughs and premise as the divisions are mostly even. Even accounting for uneven age groups in the raw data, it still seems like 25-44 is the largest category. 
+
+### Race
+
+We can dig further into demographics by looking into the race and gender of both the suspects and victims. Note - this is simply exploratory analysis of data that has been reported and categorized by the NYPD and care should be taken for any extrapolation that may be made.  
+
+Let us begin by diving into trends between the race of the suspects and victims.
+```{r}
+require(gridExtra)
+
+p1 <- df_key_fields %>%
+  group_by(SUSP_RACE, SUSP_RACE_short) %>%
+  summarize(freq = n()) %>%
+  arrange(desc(freq)) %>%
+  slice(1:7) %>%
+  ggplot(aes(x=fct_reorder(SUSP_RACE_short,freq,.desc = TRUE),y=freq)) +
+  geom_bar(stat = "identity",fill = "cornflowerblue") +
+  #scale_x_discrete(guide = guide_axis(n.dodge=3))+
+  #ggtitle("Reports by Suspect Race") +
+  xlab("Suspect Race") +
+  ylab("Count") +
+  #labs(subtitle = "U=Unknown, B=Black, WH=White/Hispanic, W=White,\n BH=Black/Hispanic, AP=Asian/Pacific Islander, AI=American Indian") + 
+  scale_y_continuous(label=comma)
+
+p2 <- df_key_fields %>%
+  group_by(VIC_RACE, VIC_RACE_short) %>%
+  summarize(freq = n()) %>%
+  arrange(desc(freq)) %>%
+  slice(1:6) %>%
+  ggplot(aes(x=fct_reorder(VIC_RACE_short,freq,.desc = TRUE),y=freq)) +
+  geom_bar(stat = "identity",fill = "cornflowerblue") +
+  #scale_x_discrete(guide = guide_axis(n.dodge=3))+
+  #ggtitle("Reports by Victim Race") +
+  xlab("Victim Race") +
+  ylab("Count") + 
+  #labs(subtitle = "U=Unknown, B=Black, WH=White/Hispanic, W=White, BH=Black/Hispanic, AP=Asian/Pacific Islander, AI=American Indian/Native") + 
+  scale_y_continuous(label=comma)
+
+grid.arrange(p1, p2, ncol=2, top="Reports by Victim Race", bottom="U=Unknown, B=Black, WH=White/Hispanic, W=White, BH=Black/Hispanic, AP=Asian/Pacific Islander, AI=American Indian" )
+```
+
+
+While there is a lot of null/unknown data, we would like to explore patterns between the race of the suspect and victim. 
+
+```{r}
+ggplot(df_key_fields, aes(VIC_RACE_short, SUSP_RACE_short)) + 
+  geom_bin2d()+
+  scale_fill_continuous(label=comma)+
+  #scale_x_discrete(guide = guide_axis(n.dodge=3)) +
+  xlab("Suspect Race") +
+  ylab("Victim Race") +
+  ggtitle("Victim Race vs Suspect Race") +
+  labs(subtitle = "U=Unknown, B=Black, WH=White/Hispanic, W=White, BH=Black/Hispanic, \n AP=Asian/Pacific Islander, AI=American Indian", fill="Count") 
+
+```
+
+We see from the bar charts that most of the victims are Black and also that most of the suspects are Black. Logically, the intersection of these two fields is also the highest which is made evident in the heatmap. While this graph has its merits, demographically we know that there are much fewer people of say American Indian race than Black. It may also be worth looking at the proportion per suspect race in each horizontal victim race band to account for uneven data classes. 
+
+
+### Gender
+Next, lets do a gender focused analysis.
+
+```{r}
+ggplot(df_key_fields, aes(SUSP_SEX,VIC_SEX)) + 
+  geom_bin2d()+
+  #scale_x_discrete(guide = guide_axis(n.dodge=3)) +
+  scale_fill_continuous(label=comma)+
+  labs(
+   x ="Suspect Sex"
+  ,y ="Victim Sex"
+  ,title = "Victim Sex vs Suspect Sex"
+  ,subtitle = "M=Male, F=Female, L=Law Enforcement, E=Corporation, D=NY State", fill="Count") 
+
+```
+
+We see that most of the victims are female and most of the suspects are male although there is a large unknown category. It is concerning but would fit with the historical paradigm that most of the crime seems to be committed by men towards women.
+
+
+
+## Time Series Analysis
+
+Per pre-processing, we are focusing on incidents reported in 2022. We can look at the overall trend during the year as of the publish date, after Q3 2022. 
+
+```{r}
+ggplot(df_filter, aes(x=Incident_Month, color=
+                        fct_infreq(CRIME_CAT)
+                      )) +
+      geom_line(aes(fill=..count..),stat="bin",binwidth=1) +
+      scale_x_continuous(limits = c(1,9), n.breaks=12) +
+      scale_y_continuous(limits = c(0,20000), label=comma) +
+      #facet_grid((CRIME_CAT) ~ .) +
+      labs(
+        title = "2022 Crimes Per Month (Q1-Q3)",
+        x = "Month (as a number)",
+        y = "Total Reports",
+        color = "Crime Category"
+      ) 
+```
+
+The overall trend is dominated by theft crimes since the volume is largest. It does seem like there is a hump over summer which may align to more human activity and thus more crime. Uniquely, there is a dip for drug crimes in the summer. 
+
+### Day of Week
+Let's now look at some other time related charts.
+```{r}
+ggplot(df_filter, aes(y=CRIME_CAT , fill=fct_rev(Incident_DayOfWeek)) ) + 
+  geom_bar(stat='count', position='dodge') +
+  scale_x_continuous(label=comma) +
+  scale_fill_brewer(palette='Set2', breaks=c('Sun','Mon','Tue','Wed','Thu','Fri','Sat'))+
+  #scale_fill_discrete(breaks=c('Sun','Mon','Tue','Wed','Thu','Fri','Sat')) +
+  labs(
+      title = "2022 Crimes By Day of Week (Q1-Q3)",
+      x = "Count",
+      y = "",
+      fill = "Day"
+      ) 
+```
+
+There are a few interesting trends here. For one, theft appears to be lower on weekends whereas violent crimes are the opposite. We also see that fraud/gambling ramps up over the week and peaks on Fridays. Sex crimes are highest on Wednesdays surprisingly.
+
+### Time of Day
+Let's also look at the time of the day:
+```{r}
+ggplot(df_filter, aes(x = Incident_HourTime, y=fct_rev(Incident_DayOfWeek)
+                      )) +
+                      #, fill=fct_rev(Incident_DayOfWeek) 
+  geom_density_ridges() +
+  scale_x_continuous(limits = c(0,24), breaks = seq(0, 24, by = 1)) +
+  #scale_fill_brewer(palette='Set2', breaks=c('Sun','Mon','Tue','Wed','Thu','Fri','Sat'))+
+  labs(
+      title = "Hourly Breakdown (Total Q1-Q3 2022)",
+      x = "Time of Day (24 Clock)",
+      y = "Day of Week"
+      ) +
+      theme(legend.position="none")
+      #+ theme_classic(18)
+```
+
+The raw data is rounded to the nearest minute but there is likely binning happening with time reported on the nearest hour. There appears to be a peak at 12:00pm (12 of 24) which is likely a data quality issue in that reports may default to that time when not specified exactly. This also happens as 12:00am (0 of 24) though it is harder to see due to how the ridge plot extrapolates at the boundary. That said, this graph shows that crimes seems to peak at night around 6pm. But is this related to individual crimes and in/around parks?
+
+```{r}
+#Consider counts for each of these groups below (ex how often is there a crime against and entity in a park)? Refer back to demographic plots.
+ggplot(df_filter, aes(x = Incident_HourTime, y=Premise_Derived )) +
+  geom_density_ridges() +
+  scale_x_continuous(limits = c(0,24), breaks = seq(0, 24, by = 1)) +
+  facet_grid((VIC_Individual_Flag) ~ .) +
+  labs(
+      title = "Crimes by Premise and Time for Individuals vs Entities",
+      subtitle = "Y = Indivuals, N = Entities/Businesses/NY State",
+      x = "Time of Day (24 Clock)",
+      y = "Premise Category"
+      )
+```
+
+From prior charts, we know that the number of crimes is skewed toward those occurring in "Inside". This does not represent the magnitude but we can see that for individuals, parks are more 'dangerous' at night - more so than other locations. However, it is somewhat comforting to know that this starts to drop off quickly after about 7-8pm. 
+
+
+
+
+## Location Analysis
+
+### Spatial Distribution Around Columbia
+
+Since a component of our research is to analyze how crime is spread out around Columbia University, a visual analysis of spatial distribution of all crime around Columbia is useful. The following is a map centered around Columbia University (CU) that shows where crime is distributed. 
+
+```{r}
+# Plottting columbia data on a map
+columbia <- df_filter[df_filter$dist_to_CU <= 2000,]
+columbia <- columbia[!is.na(columbia$dist_to_CU),] #there are 9 rows with missing lat/long info
+
+#library(ggmap)
+register_google(key = "AIzaSyDUVtOF3qSoJEcQAZ9mU0E1rGKQDqcuNGw")
+map = get_googlemap(center = c(lon = -73.963036, lat = 40.807384),zoom = 15)
+ggmap(map) + geom_point(aes(x = Longitude, y = Latitude), data = columbia, , color = 'red', position=position_jitter(h=0.0001, w=0.0001), alpha = 0.05, size = 1) + 
+  theme(axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank()) + ggtitle("Spatial distribution of crime around Columbia University")
+```
+
+The above map is useful to see how geographical location of a crime is coded in the dataset - for example, all crimes happening on a particular street (or residences on a particular street) between two avenues is assigned to the lat-long coordinates of the center of that street (See W 111th St to W 124th St for instance). 
+
+Another thing this shows is around which subway station there is more crime. For example, out of the 2 125th st stations, the one on the right has noticeably more crime concentrated around it than the one on the left. Note that the way data is recorded, all crimes that happen inside a subway station are coded to the location of the subway station. So this result could also mean that one station is safer than the other. 
+
+This map could also be used to plan one's route to and from Columbia depending if safety is a concern. For example, one could see which streets and avenues have less crime concentrated on them and so could indicate which routes are generally safer to travel on. Stay tuned for our interactive component that makes it easier for you to zoom in and out while planning your route! 
+
+### Spatial Distribution Around Columbia by Crime Category
+
+Following maps show the spatial distribution of crime around Columbia University by crime categories.
+
+```{r}
+# Map of different crime types around Columbia
+
+map = get_googlemap(center = c(lon = -73.963036, lat = 40.807384),zoom = 15)
+ggmap(map) + geom_point(aes(x = Longitude, y = Latitude), data = columbia, , color = 'red', position=position_jitter(h=0.0001, w=0.0001), alpha = 0.05, size = 1) + 
+  theme(axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank()) + facet_wrap(~CRIME_CAT)
+```
+
+The above maps clearly show that the most prevalent kind of crime around Columbia University is "THEFT OR BURGLARY" and "DRUG AND ALCOHOL RELATED" crimes are the least prevalent. Another interesting pattern to note is that for the categories "SEX CRIMES", "FRAUD/GAMBLING AND MISC", and "MAJOR VIOLENT CRIMES", the crime is concentrated most around 125th st. 
+
+
+### Increasing Radius from Columbia
+
+The following histogram was produced to check how the crime frequency increases with increasing radius away from school.
+
+```{r}
+# Line graph of density at different points
+
+ggplot(columbia, aes(dist_to_CU)) +
+  geom_histogram(color = "blue", fill = "lightBlue", binwidth = 100) +
+      scale_x_continuous(label=comma) +
+      scale_y_continuous(label=comma) +
+      labs(
+        title = "Histogram of Crime by Distance to Columbia",
+        x = "Distance to CU (meters)",
+        y = "Count",
+      ) 
+```
+
+This graph shows that within each 100m radius (up to 2000m away from Columbia), the crime frequency increases. The explanation is that because the increase in area considered within each 100m bin increases polynomially (with the power of 2), it's only natural that we see more crimes in buckets farther away from Columbia than those closer to columbia because the area considered within each bucket increases more than linearly. It is still interesting to note however that for some buckets the crime frequency goes down even though the area considered goes up. The next plots further investigate this issue using the concept of density of crime. 
+
+### Cumulative Crime Near CU
+
+The previous plot motivated us to try to confirm whether the crime frequency follows a quadratic relationship with respect to radius from Columbia University. Note that this would imply that crime scales linearly with the area considered. 
+
+```{r}
+# Line graph of density at different points away from Columbia
+#library(tidyverse)
+#columbia[, Radius := cut(dist_to_CU, breaks = c(0, 101, 201, 301, 401, 501, 601, 701, 801, 901, 1001, 1101, 1201, 1301, 1401, 1501, 1601, 1701, 1801, 1901, 2001), labels = c("0-100", "100-200", "3001-400", "10001-20000"))]
+
+ggplot(columbia, aes(dist_to_CU)) +
+   stat_ecdf(color = "blue", fill = "lightBlue", binwidth = 100) +
+      scale_x_continuous(label=comma) +
+      scale_y_continuous(label=percent) +
+      labs(
+        title = "Crime by Distance to Columbia (Cumulative)",
+        x = "Distance to CU (meters)",
+        y = "Crime Reports (% of total within 2000m)",
+      ) 
+
+```
+
+Note that the curve roughly follows the shape of the quadratic curve confirming that the crime does increase linearly with area and quadratically with the radius considered. So then, what explains the decline in crime frequency observed in some of the buckets in the previous histogram? (For instance, the bucket that shows the crime frequency to drop between 1100m and 1200m as compared to the bucket that shows the crime frequency within 1000m and 1100m). We further explore this issue in our next plots. 
+
+### Crime Density
+Since in the earlier histogram we saw that within some buckets the crime count was decreasing, we wanted to see how the density of crime changes as move away from Columbia generally and also specifically as we move from a bucket of 100m radius to the next bucket of the incremental 100m radius.
+
+```{r}
+# Making dataset to help plot density graphs
+
+#Your code
+factordist <- factor(cut(columbia$dist_to_CU, breaks=c(0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100)))
+#Tabulate and turn into data.frame
+xout <- as.data.frame(table(factordist))
+#Add cumFreq and proportions
+xout <- transform(xout, cumFreq = cumsum(Freq))
+xout$factordist <- as.numeric(xout$factordist)
+
+density <- xout %>% 
+  mutate(dist = case_when(factordist==1 ~ 100,
+                          factordist==2 ~ 200,
+                          factordist==3 ~ 300,
+                          factordist==4 ~ 400,
+                          factordist==5 ~ 500,
+                          factordist==6 ~ 600,
+                          factordist==7 ~ 700,
+                          factordist==8 ~ 800,
+                          factordist==9 ~ 900,
+                          factordist==10 ~ 1000,
+                          factordist==11 ~ 1100,
+                          factordist==12 ~ 1200,
+                          factordist==13 ~ 1300,
+                          factordist==14 ~ 1400,
+                          factordist==15 ~ 1500,
+                          factordist==16 ~ 1600,
+                          factordist==17 ~ 1700,
+                          factordist==18 ~ 1800,
+                          factordist==19 ~ 1900,
+                          factordist==20 ~ 2000))
+
+density$cum_density <- density$cumFreq/(density$dist * density$dist)
+density <- density %>%  mutate(incremental_area = dist*dist - lag(dist*dist, default = first(dist*dist)))
+density$incremental_area[density$incremental_area == 0] <- 100*100
+
+density$inc_density <- density$Freq/(density$incremental_area)
+
+```
+
+```{r}
+# Making density graphs
+cum_density_plot <- ggplot(density, aes(dist, cum_density)) + geom_line() + 
+      scale_x_continuous(label=comma) +
+      labs(
+        title = "Cumulative Crime Density",
+        x = "Distance to CU (meters)",
+        y = "Density of Crime (# reports/m^2)",
+      ) 
+
+inc_density_plot <- ggplot(density, aes(dist, inc_density)) + geom_line() +
+      scale_x_continuous(label=comma) +
+      labs(
+        title = "Incremental Crime Density",
+        x = "Distance to CU (meters)",
+        y = "Density of Crime (# reports/m^2)",
+      ) 
+
+grid.arrange(cum_density_plot, inc_density_plot, ncol=2)
+
+```
+
+- Note that the cumulative density plot shows that crime is less dense within 750m of Columbia after which it becomes more dense. Potential explanations are that there could be extra policing around the campus area, or an increase in crime density due to an increase in population density as we move beyond 750m from Columbia. 
+
+- The incremental density plot shows the increase (or decrease) in density as we move from a bucket of 100m to radius to the bucket of next 100m radius around Columbia. Note that this graph also shows what the earlier histogram showed, i.e., for some buckets the density of crime goes down. 
+
+
+
+```{r}
+# Using community contribution regarding making concentric circles around one's point of interest on a google map (concentric_circles_ggmap_ggplot)
+
+# The following function uses the approximation that each degree of latitude represents 40075 / 360 kilometers and that each degree of longitude represents (40075 / 360) * cos(latitude) kilomemters. 
+
+circles_data <- function(centers, radius, nPoints = 100){
+    # centers: the data frame that has the lat/long coordinate of our point of interest
+    # radius: radius measured in kilometer
+    # nPoints: Defines the number of points on the circumference of the circle. The more the number of points, the smoother your circle will be
+    meanLat <- mean(centers$latitude)
+    # length per longitude changes with lattitude, so need correction
+    radiusLon <- radius /111 / cos(meanLat/57.3) 
+    radiusLat <- radius / 111
+    circleDF <- data.frame(ID = rep(centers$ID, each = nPoints))
+    angle <- seq(0,2*pi,length.out = nPoints)
+    circleDF$lon <- unlist(lapply(centers$longitude, function(x) x + radiusLon * cos(angle)))
+    circleDF$lat <- unlist(lapply(centers$latitude, function(x) x + radiusLat * sin(angle)))
+    return(circleDF)
+}
+
+lat_long_data <- data.frame(ID = c('1'), latitude = c(40.807384),longitude = c(-73.963036)) ##ADDED THIS SO NO ERROR WOULD BE THROWN, IS THIS RIGHT??
+circle_100m <- circles_data(lat_long_data, 0.1)
+circle_200m <- circles_data(lat_long_data, 0.2)
+circle_300m <- circles_data(lat_long_data, 0.3)
+circle_400m <- circles_data(lat_long_data, 0.4)
+circle_500m <- circles_data(lat_long_data, 0.5)
+circle_600m <- circles_data(lat_long_data, 0.6)
+circle_700m <- circles_data(lat_long_data, 0.7)
+circle_800m <- circles_data(lat_long_data, 0.8)
+circle_900m <- circles_data(lat_long_data, 0.9)
+circle_1000m <- circles_data(lat_long_data, 1)
+```
+
+
+### Deeper Dive of Crime Density
+
+To finally see why we see buckets of incremental 100m radius away from Columbia with decreasing density of crime, we decided to plot these buckets visually on a google map of the area around Columbia overlapped with the spatial density of crime. 
+
+```{r}
+map = get_googlemap(center = c(lon = -73.963036, lat = 40.807384),zoom = 15)
+
+ggmap(map) + geom_point(aes(x = Longitude, y = Latitude), data = df_filter, , color = 'red', position=position_jitter(h=0.0001, w=0.0001), alpha = 0.1, size = 1) + geom_polygon(data = circle_100m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_200m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_300m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_400m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_500m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_600m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_700m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_800m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_900m, aes(lon, lat), color = "red", alpha = 0) +  geom_polygon(data = circle_1000m, aes(lon, lat), color = "red", alpha = 0) + theme(axis.text.x=element_blank(),
+      axis.ticks.x=element_blank(),
+      axis.text.y=element_blank(),
+      axis.ticks.y=element_blank(),
+      axis.title.x=element_blank(),
+      axis.title.y=element_blank()) + ggtitle("Spatial distribution of crime wrt incremental radius of 100m away from Columbia")
+```
+
+We speculate that we see up and down jumps in incremental crime density due to the following reasons: 
+
+1. While we increase the area in a circular fashion as we move away from Columbia, the lat/long coordinates of crime are recorded with the grid structure of Manhattan in mind. Therefore, some incremental radius/area buckets circles end up having way less crime reported if they contain parts of a park in them (since the crimes within parks are reported as happening on the streets outside the parks). 
+
+2. Another reason is that many crimes are just reported to the center of the streets (as discussed in the spatial distribution map earlier). What ends up happening is that some incremental radius/area buckets end up including a straight line of all these concentrated crimes which lead to their crime density shooting up- see for example the area between the third last and the second last circle that ends up having majority of the crimes reported on streets W 112th to W 120th.
+
+
