@@ -5,3 +5,4 @@ Data in this project comes from NYC Open Data (NYC Office of Technology and Inno
 The rendered R bookdown can found at the following link: https://ds4114.github.io/NYC_Crime_Visualization/
 
 *This repo was initially generated from a bookdown template available here: https://github.com/jtr13/EDAVtemplate.*	
+*This repo builds off of data aggreagtion and contributions from @abhiram21 and @faizan-dogar avaialbe here: https://github.com/ds4114/NYC_Crime_Group32
